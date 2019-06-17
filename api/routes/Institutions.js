@@ -8,9 +8,16 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
+  const institution = {
+    id: req.body.id,
+    url: req.body.url,
+    email: req.body.email
+  };
+
   res.status(201).json({
-    message: 'POST  /institutions'
+    message: 'POST  /institutions',
+    institution: institution
   });
 });
 

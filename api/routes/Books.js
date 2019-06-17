@@ -1,5 +1,9 @@
+const path = require('path');
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+
+const Book = require(path.resolve('api/models/book'));
 
 
 router.get('/', (req, res) => {
@@ -8,9 +12,22 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
+  const book = new Book({
+    id: new mongoose.Types.ObjectId(),
+    isbn: req.body.isbn || null,
+    title: req.body.title || null,
+    author: req.body.author || null
+  });
+
+  book.save().then(res => {
+    console.log(res);
+  })
+  .catch(err => console.log(err));
+
   res.status(201).json({
-    message: 'POST  /books'
+    message: 'POST  /books',
+    book: book
   });
 });
 
